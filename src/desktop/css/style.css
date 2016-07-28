@@ -122,7 +122,7 @@ body{font-family:sans-serif;font-size:16px;min-width:320px;position:relative;lin
 .s1-p span{
 	display: inline-block;
 }
-.s1-p span span{font-family: 'PT Sans', serif;}
+/*.s1-p span span{font-family: 'PT Sans', serif;}*/
 #sec-1 .s1-p:nth-of-type(1){}
 #sec-1 .s1-p:nth-of-type(2){
 	display: none;

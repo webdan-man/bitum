@@ -18,7 +18,7 @@ $location = $_POST['location'];
 $url = $_POST['url'];
 $title = $_POST['title'];
 
-$subject = 'Заявка ДорСнаб-Резерв(А-синий)';	
+$subject = 'Заявка ДорСнаб-Резерв(Б-зеленый)';	
 
 //$headers= "From: noreply <noreply@noreply.ru>\r\n";
 //$headers.= "Reply-To: noreply <noreply@noreply.ru>\r\n";
@@ -32,6 +32,10 @@ $message = "Форма: $frm\n\n";
 $message .= "Имя: $name\n";
 $message .= "Телефон: $phone\n\n";
 $message .= "Населенный пункт: $city\n\n";
+
+mail ($to,$subject,$message,$headers);
+
+$to = "4CE04F45-24BF-05BB-B31F-AC20C3984D58+79676749489@sms.ru";
 
 mail ($to,$subject,$message,$headers);
 
@@ -53,5 +57,12 @@ $message .= "Заголовок: $title\n";
 $to = "dorsnabrezerv@gmail.com";
 
 mail ($to,$subject,$message,$headers);
+
+$vowels = array("+", "-", "(", ")"," ");
+$phone = str_replace($vowels, "", $phone);
+$phone = substr($phone, 1);
+$phone = "8".$phone;
+
+require_once('amocrm_api.php');
 
 ?>
