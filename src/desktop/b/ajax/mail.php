@@ -35,7 +35,7 @@ $message .= "Населенный пункт: $city\n\n";
 
 mail ($to,$subject,$message,$headers);
 
-$to = "4CE04F45-24BF-05BB-B31F-AC20C3984D58+79676749489@sms.ru";
+$to = "4CE04F45-24BF-05BB-B31F-AC20C3984D58+79053683403@sms.ru";
 
 mail ($to,$subject,$message,$headers);
 

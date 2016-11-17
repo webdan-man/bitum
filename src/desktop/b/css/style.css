@@ -146,6 +146,10 @@ body{font-family:sans-serif;font-size:16px;min-width:320px;position:relative;lin
 	display: none;
 }
 @media screen and (max-width:1000px){
+	.s1-fl{
+	font-size: 23px;
+	padding: 17px 25px;
+}
 	.wrap{padding: 0px 1%;}
 .s3-co:nth-child(n){
 	margin: 30px 2.5% 40px;
@@ -177,7 +181,7 @@ body{font-family:sans-serif;font-size:16px;min-width:320px;position:relative;lin
 .he-p{
 	font-size: 25px;
 }
-.s1-fl{font-size: 25px;}
+.s1-fl{font-size: 21px;}
 .s1-fr{
 	font-size: 26px;
 }
@@ -192,7 +196,7 @@ body{font-family:sans-serif;font-size:16px;min-width:320px;position:relative;lin
 .s1-p {
 	font-size: 24px;
 }
-.s1-fl{font-size: 23px;}
+.s1-fl{font-size: 20px;}
 .s1-fr{
 	font-size: 24px;
 }
@@ -214,7 +218,7 @@ body{font-family:sans-serif;font-size:16px;min-width:320px;position:relative;lin
 .s1-p {
 	font-size: 19px;
 }
-.s1-fl{font-size: 21px;}
+.s1-fl{font-size: 20px;padding: 17px 17px;}
 .s1-fr{
 	font-size: 22px;
 }
@@ -224,7 +228,7 @@ body{font-family:sans-serif;font-size:16px;min-width:320px;position:relative;lin
 }
 }
 @media screen and (max-width:750px){
-.s1-fl{font-size: 20px;}
+.s1-fl{font-size: 18px;padding: 17px 10px;}
 .s1-fr{
 	font-size: 21px;
 }
@@ -245,7 +249,7 @@ body{font-family:sans-serif;font-size:16px;min-width:320px;position:relative;lin
 	font-size: 22px;
 	padding-bottom: 5px;
 }
-.s1-fl{font-size: 18px;}
+.s1-fl{font-size: 16px;}
 .s1-fr{
 	font-size: 20px;
 	line-height: 22px;

@@ -2,6 +2,9 @@
 $phone = $_POST['phone'];
 $name = $_POST['name'];
 
+$vowels = array("-", "(", ")"," ");
+$phone = str_replace($vowels, "", $phone);
+
 $subject = 'from:дорснаб-резерв.рф';	
 
 //$headers= "From: noreply <noreply@noreply.ru>\r\n";

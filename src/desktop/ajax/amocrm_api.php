@@ -1,9 +1,17 @@
 <?php
 
+$config = array(
+    'USER_LOGIN'=>'dorsnabrezerv@gmail.com', #Ваш логин (электронная почта)
+    'USER_HASH'=>'87e7b69690bff6bfaf8901402790e01a' #Хэш для доступа к API (смотрите в профиле пользователя)
+    'SUBDOMIAN'=>'new5736e916d8106'; #Наш аккаунт - поддомен
+    'name'=>$name; 
+    'phone'=>array('id' => 12312321, 'value' => $phone);
+    'responsible_user_id'=>90090909; 
+);
 
 $user=array(
-	'USER_LOGIN'=>'dorsnabrezerv@gmail.com', #Ваш логин (электронная почта)
-	'USER_HASH'=>'87e7b69690bff6bfaf8901402790e01a' #Хэш для доступа к API (смотрите в профиле пользователя)
+    'USER_LOGIN'=>'dorsnabrezerv@gmail.com', #Ваш логин (электронная почта)
+    'USER_HASH'=>'87e7b69690bff6bfaf8901402790e01a' #Хэш для доступа к API (смотрите в профиле пользователя)
 );
 
 $subdomain='new5736e916d8106'; #Наш аккаунт - поддомен
@@ -53,6 +61,7 @@ if ($code==200){
         $summ=0;
 
         $responsible_user_id=827097;
+
         $date=date("d.m.Y");
 
 
@@ -91,12 +100,15 @@ if ($code==200){
         $out=curl_exec($curl); #Инициируем запрос к API и сохраняем ответ в переменную
         $code=curl_getinfo($curl,CURLINFO_HTTP_CODE);
 
+        curl_close($curl);
 
 
         $Response=json_decode($out,true);
+
+        //print_r($out);
         $Response=$Response['response']['leads']['add'];
         $idsdelka=$Response[0]['id'];
-
+        //print_r($idsdelka);
 
 
 
@@ -113,12 +125,13 @@ if ($code==200){
         $newid = $out_cont['response']['contacts'][0]['linked_leads_id'][0];
 
         $updated_contact = array_push($finded_contact['linked_leads_id'],$idsdelka);
+
         
 
-        //print_r($finded_contact);  
+        print_r($finded_contact);  
 
 
-        $contacts['request']['contacts']['update'] = $finded_contact;
+        $contacts['request']['contacts']['update'][0] = $finded_contact;
 
         $link='https://'.$subdomain.'.amocrm.ru/private/api/v2/json/contacts/set';
 
@@ -140,6 +153,42 @@ if ($code==200){
         $code=curl_getinfo($curl,CURLINFO_HTTP_CODE);
 
 
+        curl_close($curl);
+        
+        $contacts_id = $finded_contact['id'];
+
+            //создаем задачу
+            $tasks['request']['tasks']['add']=array(
+                         array(
+                               'element_id'=>$contacts_id,
+                                'element_type'=>1,
+                                'task_type'=>3,
+                                'text'=>'Заявка с сайта (А версия)',
+                                'responsible_user_id'=>$responsible_user_id, //ответсвенный
+                                'complete_till'=>time()//дата
+                              )
+                        );                
+                        
+                        $link='https://'.$subdomain.'.amocrm.ru/private/api/v2/json/tasks/set';
+                        
+                        $curl=curl_init(); #Сохраняем дескриптор сеанса cURL
+                        #Устанавливаем необходимые опции для сеанса cURL
+                        curl_setopt($curl,CURLOPT_RETURNTRANSFER,true);
+                        curl_setopt($curl,CURLOPT_USERAGENT,'amoCRM-API-client/1.0');
+                        curl_setopt($curl,CURLOPT_URL,$link);
+                        curl_setopt($curl,CURLOPT_CUSTOMREQUEST,'POST');
+                        curl_setopt($curl,CURLOPT_POSTFIELDS,json_encode($tasks));
+                        curl_setopt($curl,CURLOPT_HTTPHEADER,array('Content-Type: application/json'));
+                        curl_setopt($curl,CURLOPT_HEADER,false);
+                        curl_setopt($curl,CURLOPT_COOKIEFILE,dirname(__FILE__).'/cookie.txt'); #PHP>5.3.6 dirname(__FILE__) -> __DIR__
+                        curl_setopt($curl,CURLOPT_COOKIEJAR,dirname(__FILE__).'/cookie.txt'); #PHP>5.3.6 dirname(__FILE__) -> __DIR__
+                        curl_setopt($curl,CURLOPT_SSL_VERIFYPEER,0);
+                        curl_setopt($curl,CURLOPT_SSL_VERIFYHOST,0);
+                         
+                        $out=curl_exec($curl); #Инициируем запрос к API и сохраняем ответ в переменную
+                        $code=curl_getinfo($curl,CURLINFO_HTTP_CODE);
+
+                        curl_close($curl);
 
     }else{
 
@@ -187,6 +236,7 @@ if ($code==200){
         $code=curl_getinfo($curl,CURLINFO_HTTP_CODE);
 
 
+        curl_close($curl);
 
         $Response=json_decode($out,true);
         $Response=$Response['response']['leads']['add'];
@@ -239,11 +289,49 @@ if ($code==200){
         $out=curl_exec($curl); #Инициируем запрос к API и сохраняем ответ в переменную
         $code=curl_getinfo($curl,CURLINFO_HTTP_CODE);
 
+        curl_close($curl);
+
+        $Response=json_decode($out,true);
+        $contacts_id = $Response['response']['contacts']['add'][0]['id'];
+
+            //создаем задачу
+            $tasks['request']['tasks']['add']=array(
+                         array(
+                               'element_id'=>$contacts_id,
+                                'element_type'=>1,
+                                'task_type'=>3,
+                                'text'=>'Заявка с сайта (А версия)',
+                                'responsible_user_id'=>$responsible_user_id, //ответсвенный
+                                'complete_till'=>time()//дата
+                              )
+                        );                
+                        
+                        $link='https://'.$subdomain.'.amocrm.ru/private/api/v2/json/tasks/set';
+                        
+                        $curl=curl_init(); #Сохраняем дескриптор сеанса cURL
+                        #Устанавливаем необходимые опции для сеанса cURL
+                        curl_setopt($curl,CURLOPT_RETURNTRANSFER,true);
+                        curl_setopt($curl,CURLOPT_USERAGENT,'amoCRM-API-client/1.0');
+                        curl_setopt($curl,CURLOPT_URL,$link);
+                        curl_setopt($curl,CURLOPT_CUSTOMREQUEST,'POST');
+                        curl_setopt($curl,CURLOPT_POSTFIELDS,json_encode($tasks));
+                        curl_setopt($curl,CURLOPT_HTTPHEADER,array('Content-Type: application/json'));
+                        curl_setopt($curl,CURLOPT_HEADER,false);
+                        curl_setopt($curl,CURLOPT_COOKIEFILE,dirname(__FILE__).'/cookie.txt'); #PHP>5.3.6 dirname(__FILE__) -> __DIR__
+                        curl_setopt($curl,CURLOPT_COOKIEJAR,dirname(__FILE__).'/cookie.txt'); #PHP>5.3.6 dirname(__FILE__) -> __DIR__
+                        curl_setopt($curl,CURLOPT_SSL_VERIFYPEER,0);
+                        curl_setopt($curl,CURLOPT_SSL_VERIFYHOST,0);
+                         
+                        $out=curl_exec($curl); #Инициируем запрос к API и сохраняем ответ в переменную
+                        $code=curl_getinfo($curl,CURLINFO_HTTP_CODE);
+
+                        curl_close($curl);
 
     }
 
 
-	
+
+    
 }
 
 
